@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace ConsoleApp;
+namespace SouRLib;
 
 public static class YaraNative
 {
@@ -55,7 +55,6 @@ public static class YaraNative
 
     #region 回调委托
 
-    // YARA 4.x 回调函数签名
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int YR_CALLBACK_FUNC(
         IntPtr context,

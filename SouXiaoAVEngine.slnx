@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="LiuLiAVHeuristic/LiuLiAVHeuristic.csproj" />
+  <Project Path="SouRLib/SouRLib.csproj" />
+  <Project Path="SouXiao/SouXiao.csproj" />
+</Solution>

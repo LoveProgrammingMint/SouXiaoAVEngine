@@ -20,13 +20,13 @@
     <None Update="libyara64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="SouXiao\SouRlib\DangerousObject.yar">
+    <None Update="SouXiao\SouRLib\DangerousObject.yar">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="SouXiao\SouRlib\Virus.yar">
+    <None Update="SouXiao\SouRLib\Virus.yar">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="SouXiao\SouRlib\Worm.yar">
+    <None Update="SouXiao\SouRLib\Worm.yar">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

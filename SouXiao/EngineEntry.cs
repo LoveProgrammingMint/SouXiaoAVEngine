@@ -27,5 +27,21 @@ namespace SouXiao
             EStatuses.Add("SouRLib", EngineStatus.UnLoad);
             EObject.Add("SouRLib", new SouRlibEntry());
         }
+
+        public Boolean Initialize()
+        {
+            try
+            {
+                EObject["LiuLiAV"].Initialize(".\\LiuLi.onnx");
+                EStatuses["LiuLiAV"] = EngineStatus.Loaded;
+                EObject["SouRLib"].Initialize(".\\SouXiao\\SouRLib\\");
+                EStatuses["SouRLib"] = EngineStatus.Loaded;
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

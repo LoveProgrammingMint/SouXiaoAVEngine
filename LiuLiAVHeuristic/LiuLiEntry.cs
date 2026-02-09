@@ -33,7 +33,7 @@ public class LiuLiEntry : IDisposable, IEngineEntry
         if (_session == null || String.IsNullOrEmpty(FilePath))
             throw new InvalidOperationException("Callback can't use this engine");
 
-        if (IsPE) return [EngineResult.UnSupport];
+        if (!IsPE) return [EngineResult.UnSupport];
         var bytePool = ArrayPool<byte>.Shared;
         byte[] byteBuffer = bytePool.Rent(INPUT_SIZE);
 

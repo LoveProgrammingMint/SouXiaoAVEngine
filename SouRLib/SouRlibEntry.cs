@@ -1,51 +1,43 @@
-﻿
+﻿using PublicPart;
 namespace SouRLib;
 
-public class SouRlibEntry : IDisposable
+public class SouRlibEntry : IDisposable, IEngineEntry
 {
     private readonly SouRLib Lib;
-
-    public enum SouRLibScanResult
-    {
-        Safe,
-        Worm,
-        Virus,
-        Trojan,
-        Packed,
-        Hoax,
-        HackTool,
-        Exploit,
-        DangerousObject,
-        Backdoor,
-    }
+    public String VERSION { get; set; } = "5.22.1";
 
     public SouRlibEntry()
     {
         Lib = new();
     }
 
-    public bool Initialize() => Lib.Initialize(".\\SouXiao\\SouRLib\\");
+    public bool Initialize(String Path) => Lib.Initialize(Path); // ".\\SouXiao\\SouRLib\\"
 
-    public List<SouRLibScanResult> ScanFile(string filePath)
+    public List<EngineResult> Scan(bool IsPE,string? Path)
     {
-        List<YaraScanner.YaraMatch> Results = Lib.ScanFile(filePath);
-        List<SouRLibScanResult> ScanResults = [];
+        if (string.IsNullOrEmpty(Path)) throw new InvalidOperationException("Callback can't use this engine");
+        if (!IsPE) return [EngineResult.Safe];
+
+
+        List<YaraScanner.YaraMatch> Results = Lib.ScanFile(Path);
+        List<EngineResult> ScanResults = [];
         foreach (YaraScanner.YaraMatch result in Results)
         {
             String RuleHitName = result.RuleName.ToLower();
-            if (RuleHitName.Contains("worm"))             ScanResults.Add(SouRLibScanResult.Worm);
-            if (RuleHitName.Contains("trojan"))           ScanResults.Add(SouRLibScanResult.Trojan);
-            if (RuleHitName.Contains("virus"))            ScanResults.Add(SouRLibScanResult.Virus);
-            if (RuleHitName.Contains("packed"))           ScanResults.Add(SouRLibScanResult.Packed);
-            if (RuleHitName.Contains("hoax"))             ScanResults.Add(SouRLibScanResult.Hoax);
-            if (RuleHitName.Contains("hacktool"))         ScanResults.Add(SouRLibScanResult.HackTool);
-            if (RuleHitName.Contains("exploit"))          ScanResults.Add(SouRLibScanResult.Exploit);
-            if (RuleHitName.Contains("dangerousobject"))  ScanResults.Add(SouRLibScanResult.DangerousObject);
-            if (RuleHitName.Contains("backdoor"))         ScanResults.Add(SouRLibScanResult.Backdoor);
+            if (RuleHitName.Contains("worm"))             ScanResults.Add(EngineResult.Worm);
+            if (RuleHitName.Contains("trojan"))           ScanResults.Add(EngineResult.Trojan);
+            if (RuleHitName.Contains("virus"))            ScanResults.Add(EngineResult.Virus);
+            if (RuleHitName.Contains("packed"))           ScanResults.Add(EngineResult.Packed);
+            if (RuleHitName.Contains("hoax"))             ScanResults.Add(EngineResult.Hoax);
+            if (RuleHitName.Contains("hacktool"))         ScanResults.Add(EngineResult.HackTool);
+            if (RuleHitName.Contains("exploit"))          ScanResults.Add(EngineResult.Exploit);
+            if (RuleHitName.Contains("dangerousobject"))  ScanResults.Add(EngineResult.DangerousObject);
+            if (RuleHitName.Contains("backdoor"))         ScanResults.Add(EngineResult.Backdoor);
             
         }
-        if (ScanResults.Count == 0) ScanResults.Add(SouRLibScanResult.Safe);
-        return ScanResults;
+        if (ScanResults.Count == 0) ScanResults.Add(EngineResult.Safe);
+        else ScanResults.Add(EngineResult.Malicious);
+            return ScanResults;
     }
 
     public int ProcessRules() => Lib.ProcessRules();

@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PublicPart\PublicPart.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="LiuLi.onnx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -1,47 +1,55 @@
 ﻿using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
 using PeNet;
+using PublicPart;
 using System.Buffers;
 
 namespace LiuLiAVHeuristic;
 
 
-public class LiuLiV5Classifier(string modelPath) : IDisposable
+public class LiuLiEntry : IDisposable, IEngineEntry
 {
-    private readonly InferenceSession _session = new(modelPath);
+    private InferenceSession? _session;
     private readonly DenseTensor<float> _inputTensor = new([1, 3, 64, 64]);
     private const int INPUT_SIZE = 3 * 64 * 64;
-    public bool Predict(string imagePath)
+    public String VERSION { get; set; } = "5.22.1";
+
+    public Boolean Initialize(string Path)
     {
         try
         {
-            if (!PeFile.IsPeFile(imagePath))
-                return false;
+            _session = new(Path);
+            return true;
         }
-        catch (Exception)
+        catch 
         {
             return false;
         }
+    }
 
+
+    public List<EngineResult> Scan(Boolean IsPE,String? FilePath)
+    {
+        if (_session == null || String.IsNullOrEmpty(FilePath))
+            throw new InvalidOperationException("Callback can't use this engine");
+
+        if (IsPE) return [EngineResult.UnSupport];
         var bytePool = ArrayPool<byte>.Shared;
         byte[] byteBuffer = bytePool.Rent(INPUT_SIZE);
 
         try
         {
-            // 读取文件并补全
-            using var fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read, FileShare.Read, 8192, FileOptions.SequentialScan);
+
+            using var fs = new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.Read, 8192, FileOptions.SequentialScan);
             int bytesRead = fs.Read(byteBuffer, 0, INPUT_SIZE);
 
-            // 补全不足的部分
             for (int i = bytesRead; i < INPUT_SIZE; i++)
                 byteBuffer[i] = 0;
 
-            // 归一化并直接填充到Tensor的Buffer中
             var tensorSpan = _inputTensor.Buffer.Span;
             for (int i = 0; i < INPUT_SIZE; i++)
                 tensorSpan[i] = byteBuffer[i] / 255.0f;
 
-            // 执行推理
             var inputs = new[]
             {
         NamedOnnxValue.CreateFromTensor(_session.InputNames[0], _inputTensor)
@@ -50,7 +58,6 @@ public class LiuLiV5Classifier(string modelPath) : IDisposable
             using var results = _session.Run(inputs);
             var output = results[0].AsTensor<float>();
 
-            // Softmax计算
             var logits = (Span<float>)[output[0, 0], output[0, 1]];
             var max = MathF.Max(logits[0], logits[1]);
 
@@ -61,7 +68,7 @@ public class LiuLiV5Classifier(string modelPath) : IDisposable
             logits[0] /= sum;
             logits[1] /= sum;
 
-            return logits[0] < 0.25f;
+            return (logits[0] < 0.25f)? [EngineResult.Malicious] : [EngineResult.Safe] ;
         }
         finally
         {

@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LiuLiAVHeuristic\LiuLiAVHeuristic.csproj" />
+    <ProjectReference Include="..\PublicPart\PublicPart.csproj" />
+    <ProjectReference Include="..\SouRLib\SouRLib.csproj" />
+  </ItemGroup>
+
 </Project>

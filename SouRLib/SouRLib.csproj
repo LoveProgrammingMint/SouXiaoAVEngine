@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PublicPart\PublicPart.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="jansson.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="SouXiao\SouRLib\DangerousObject.yar" />
+    <None Remove="SouXiao\SouRLib\Virus.yar" />
+    <None Remove="SouXiao\SouRLib\Worm.yar" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PublicPart\PublicPart.csproj" />
   </ItemGroup>
 
@@ -20,15 +26,10 @@
     <None Update="libyara64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="SouXiao\SouRLib\DangerousObject.yar">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SouXiao\SouRLib\Virus.yar">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SouXiao\SouRLib\Worm.yar">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SouXiao\SouRLib\" />
   </ItemGroup>
 
 </Project>

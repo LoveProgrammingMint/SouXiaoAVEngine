@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="DataProcesser/DataProcesser.csproj" Id="840a6689-e0e2-474c-ae5c-d0955f322677" />
   <Project Path="LiuLiAVHeuristic/LiuLiAVHeuristic.csproj" />
   <Project Path="PublicPart/PublicPart.csproj" Id="664f7e57-d5a2-4e89-972c-0e547a6501c1" />
   <Project Path="SouRLib/SouRLib.csproj" />

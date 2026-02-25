@@ -1,9 +1,11 @@
 <Solution>
   <Project Path="DataProcesser/DataProcesser.csproj" Id="840a6689-e0e2-474c-ae5c-d0955f322677" />
+  <Project Path="Debuger/Debuger.csproj" Id="0760809b-b12a-45e0-a3c5-1759eee4403c" />
   <Project Path="LiuLiAVHeuristic/LiuLiAVHeuristic.csproj" />
   <Project Path="MuChenScaffold/MuChenScaffold.csproj" Id="d4078c45-e63d-41ee-89fe-a7fedbd46309" />
   <Project Path="PublicPart/PublicPart.csproj" Id="664f7e57-d5a2-4e89-972c-0e547a6501c1" />
   <Project Path="SouRLib/SouRLib.csproj" />
   <Project Path="SouXiao/SouXiao.csproj" />
+  <Project Path="VirusmarkAPI/VirusmarkAPI.csproj" Id="8c9389e8-6f4c-4036-8c20-d2aab474072f" />
   <Project Path="XPressLineAVHeuristic/XPressLineAVHeuristic.csproj" Id="6db7f40a-db51-4e81-acb2-1f8164a434e0" />
 </Solution>

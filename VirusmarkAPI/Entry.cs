@@ -33,7 +33,7 @@ public class VirusScanner : IEngineEntry
         String SHA256Hash = ComputeFileSha256Async(FilePath ?? "").GetAwaiter().GetResult();
         string response = ScanWithHashesAsync("APIKEY", SHA256Hash).GetAwaiter().GetResult();
         Console.WriteLine(response);
-        return new List<EngineResult> { EngineResult.UnSupport };
+        return [EngineResult.UnSupport];
     }
 
     public static async Task<string> ComputeFileSha256Async(string filePath)

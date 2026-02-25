@@ -31,7 +31,7 @@ public class VirusScanner : IEngineEntry
     public List<EngineResult> Scan(bool IsPE, string? FilePath)
     {
         String SHA256Hash = ComputeFileSha256Async(FilePath ?? "").GetAwaiter().GetResult();
-        string response = ScanWithHashesAsync("d1c3961d-401b-48cd-9ae6-0c1c1e602320", SHA256Hash).GetAwaiter().GetResult();
+        string response = ScanWithHashesAsync("APIKEY", SHA256Hash).GetAwaiter().GetResult();
         Console.WriteLine(response);
         return new List<EngineResult> { EngineResult.UnSupport };
     }
